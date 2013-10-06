@@ -1660,8 +1660,26 @@ void Foam::autoSnapDriver::determineFeatures
                 // Mark point on the nearest feature edge. Note that we
                 // only search within the surrounding since the plane
                 // reconstruction might find a feature where there isn't one.
-                const point estimatedPt(pt + patchAttraction[pointI]);
+                point estimatedPt(pt + patchAttraction[pointI]);
 
+                if (multiRegionFeatureSnap)
+                {
+                    pointIndexHit multiPatchPt
+                    (
+                        findMultiPatchPoint
+                        (
+                            pt,
+                            pointFacePatchID[pointI],
+                            pointFaceCentres[pointI]
+                        )
+                    );
+                    if (multiPatchPt.hit())
+                    {
+                      estimatedPt = (estimatedPt+multiPatchPt.hitPoint())/scalar(2.0);
+                    }
+                }
+                
+                
                 // Determine nearest point on feature edge. Store constraint
                 // (calculated from feature edge, alternative would be to
                 //  use constraint calculated from both surfaceNormals)
