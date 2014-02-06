@@ -40,6 +40,7 @@ Description
 #include "turbulenceModel.H"
 #include "fvIOoptionList.H"
 #include "fvcSmooth.H"
+#include "radiationModel.H"
 #include "pimpleControl.H"
 #include "bound.H"
 
@@ -56,6 +57,7 @@ int main(int argc, char *argv[])
     #include "setInitialrDeltaT.H"
     #include "createFields.H"
     #include "createFvOptions.H"
+    #include "createRadiationModel.H"
     #include "initContinuityErrs.H"
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //

@@ -5,10 +5,10 @@ set -x
 
 export ParMGridGen=$WM_THIRD_PARTY_DIR/ParMGridGen-1.0
 
-if [ -e "$FOAM_LIBBIN/libMGridGen.so" ]
-then
-    wmake $makeType MGridGenGamgAgglomeration
-fi
+#if [ -e "$FOAM_LIBBIN/libMGridGen.so" ]
+#then
+#    wmake $makeType MGridGenGamgAgglomeration
+#fi
 
 wmake $makeType pairPatchAgglomeration
 

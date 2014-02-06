@@ -33,9 +33,14 @@ License
 
 // * * * * * * * * * * * * * * * Static Member Data  * * * * * * * * * * * * //
 
+// Symbol to force loading at runtime
+extern "C"
+void interfacePropertiesLoad()
+{}
+
+
 const Foam::scalar Foam::interfaceProperties::convertToRad =
     Foam::constant::mathematical::pi/180.0;
-
 
 // * * * * * * * * * * * * * Private Member Functions  * * * * * * * * * * * //
 

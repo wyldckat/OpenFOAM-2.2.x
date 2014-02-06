@@ -51,6 +51,7 @@ SourceFiles
 #include "PackedBoolList.H"
 #include "boolList.H"
 #include "typeInfo.H"
+#include "Map.H"
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
@@ -85,6 +86,9 @@ class meshDualiser
 
         //- From edge to dual point (or -1 if not feature edge)
         labelList edgeToDualPoint_;
+
+  //- Dual point to dual boundary faces
+  mutable Map<labelList> dualPointToDualBoundaryFaces_;
 
 
     // Private Member Functions
@@ -174,6 +178,20 @@ class meshDualiser
         //- Disallow default bitwise assignment
         void operator=(const meshDualiser&);
 
+  //- Write either cell or face map
+  void writeMap(const string & name, labelListList & cellMap);
+
+  //- Create cell map
+  void createCellMap(labelListList & cellMap);
+
+  //- Create and write cell map
+  void writeCellMap();
+
+  //- Create face map
+  void createFaceMap(labelListList & cellMap);
+
+  //- Create and write face map
+  void writeFaceMap();
 
 public:
 
@@ -248,6 +266,9 @@ public:
                 const labelList& multiCellFeaturePoints,
                 polyTopoChange& meshMod
             );
+
+  // Write cell and face mappings old -> new, call after setRefinement
+  void writeMaps();
 };
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //

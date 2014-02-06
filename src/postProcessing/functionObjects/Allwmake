@@ -11,5 +11,6 @@ wmake $makeType IO
 wmake $makeType jobControl
 wmake $makeType systemCall
 wmake $makeType utilities
+wmake $makeType derivedFields
 
 # ----------------------------------------------------------------- end-of-file

@@ -12,7 +12,7 @@ EXE_LIBS = \
     -lmeshTools \
     -ldynamicMesh \
     -lfiniteVolume \
-    -lgenericPatchFields \
-    -lrenumberMethods \
+    -lgenericPatchFields -u genericPatchFieldsLoad \
+    -lrenumberMethods -u renumberMethodsLoad\
     $(LINK_FLAGS) \
-    -ldecompositionMethods -L$(FOAM_LIBBIN)/dummy -lmetisDecomp -lscotchDecomp
+    -ldecompositionMethods -lscotchDecomp

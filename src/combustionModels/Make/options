@@ -12,5 +12,10 @@ EXE_INC = \
 
 LIB_LIBS = \
     -lfiniteVolume \
-    -lcompressibleLESModels \
-    -lchemistryModel
+    -lcompressibleLESModels -u compressibleLESModelsLoad \
+    -lchemistryModel \
+    -lcompressibleTurbulenceModel \
+    -lLESdeltas \
+    -lspecie \
+    -lfluidThermophysicalModels \
+    -lreactionThermophysicalModels

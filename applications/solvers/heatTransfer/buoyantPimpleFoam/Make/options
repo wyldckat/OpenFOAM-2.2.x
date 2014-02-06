@@ -16,6 +16,5 @@ EXE_LIBS = \
     -lradiationModels \
     -lspecie \
     -lcompressibleTurbulenceModel \
-    -lcompressibleRASModels \
-    -lcompressibleLESModels
-
+    -lcompressibleRASModels -u compressibleRASModelsLoad \
+    -lcompressibleLESModels -u compressibleLESModelsLoad

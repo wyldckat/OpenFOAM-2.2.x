@@ -635,6 +635,12 @@ int main(int argc, char *argv[])
         "calculate the rms of the frontwidth"
     );
 
+    argList::addBoolOption
+    (
+        "writeMaps",
+        "write cellMap, faceMap, pointMap in polyMesh/"
+    );
+
 
 // Force linker to include zoltan symbols. This section is only needed since
 // Zoltan is a static library
@@ -700,7 +706,7 @@ int main(int argc, char *argv[])
     Info<< endl;
 
     bool sortCoupledFaceCells = false;
-    bool writeMaps = false;
+    bool writeMaps = args.optionFound("writeMaps");
     bool orderPoints = false;
     label blockSize = 0;
 

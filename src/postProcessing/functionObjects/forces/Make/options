@@ -9,12 +9,14 @@ EXE_INC = \
 
 LIB_LIBS = \
     -lincompressibleTransportModels \
-    -lincompressibleRASModels \
-    -lincompressibleLESModels \
+    -lincompressibleTurbulenceModel \
+    -lincompressibleRASModels -u incompressibleRASModelsLoad \
+    -lincompressibleLESModels -u incompressibleLESModelsLoad \
     -lfluidThermophysicalModels \
     -lspecie \
-    -lcompressibleRASModels \
-    -lcompressibleLESModels \
+    -lcompressibleTurbulenceModel \
+    -lcompressibleRASModels -u compressibleRASModelsLoad \
+    -lcompressibleLESModels -u compressibleLESModelsLoad \
     -lfiniteVolume \
     -lmeshTools \
     -lfileFormats

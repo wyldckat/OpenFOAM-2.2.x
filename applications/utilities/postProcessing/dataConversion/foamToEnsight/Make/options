@@ -9,6 +9,6 @@ EXE_LIBS = \
     -lfiniteVolume \
     -lmeshTools \
     -lsampling \
-    -lgenericPatchFields \
+    -lgenericPatchFields -u genericPatchFieldsLoad \
     -llagrangian
 

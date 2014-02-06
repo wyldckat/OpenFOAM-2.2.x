@@ -18,8 +18,9 @@ EXE_LIBS = \
     -lmeshTools \
     -lincompressibleTransportModels \
     -lincompressibleTurbulenceModel \
-    -lincompressibleRASModels \
-    -lincompressibleLESModels \
     -lfiniteVolume \
     -lfvOptions \
-    -lsampling
+    -lsampling \
+    -lincompressibleRASModels -u incompressibleRASModelsLoad \
+    -lincompressibleLESModels -u incompressibleLESModelsLoad \
+    -lfiniteVolume

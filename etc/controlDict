@@ -220,7 +220,7 @@ DebugSwitches
     NonlinearKEShih     0;
     ODE                 0;
     ODESolver           0;
-    OFstream            0;
+    OFstream            1;
     ORourke             0;
     OSPRE               0;
     OSPREV              0;
@@ -891,7 +891,7 @@ DebugSwitches
     waveTransmissive    0;
     wedge               0;
     weighted            0;
-    word                2;
+    word                0;
     writer              0;
     xmgr                0;
     zeroGradient        0;

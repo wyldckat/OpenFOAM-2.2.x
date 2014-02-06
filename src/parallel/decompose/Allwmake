@@ -1,6 +1,7 @@
 #!/bin/sh
 cd ${0%/*} || exit 1    # run from this directory
 makeType=${1:-libso}
+set -e
 
 # get SCOTCH_VERSION, SCOTCH_ARCH_PATH
 if settings=`$WM_PROJECT_DIR/bin/foamEtcFile config/scotch.sh`
@@ -41,11 +42,13 @@ set -x
 
 wmakeLnInclude decompositionMethods
 
+wmake $makeType decompositionMethods
+
 if [ -n "$SCOTCH_ARCH_PATH" ]
 then
     wmake $makeType scotchDecomp
 
-    if [ -d "$FOAM_LIBBIN/$FOAM_MPI" ]
+    if [ "" = "SKIP" -a -d "$FOAM_LIBBIN/$FOAM_MPI" ]
     then
         #- Bit of a hack: ptscotch 6 requires scotch linked as well as. Can be
         #  removed once ptscotch declares dependency on scotch itself.
@@ -61,8 +64,6 @@ else
     echo "Skipping scotchDecomp (ptscotchDecomp)"
     echo
 fi
-
-wmake $makeType decompositionMethods
 
 wmake $makeType decompose
 

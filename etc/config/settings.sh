@@ -151,6 +151,10 @@ SunOS)
     export WM_LDFLAGS='-mabi=64 -G0'
     ;;
 
+Darwin)
+    WM_ARCH=darwin
+    ;;
+
 *)    # an unsupported operating system
     /bin/cat <<USAGE 1>&2
 
@@ -395,7 +399,7 @@ unset boost_version cgal_version
 # Communications library
 # ~~~~~~~~~~~~~~~~~~~~~~
 
-unset MPI_ARCH_PATH MPI_HOME FOAM_MPI_LIBBIN
+unset MPI_HOME FOAM_MPI_LIBBIN
 
 case "$WM_MPLIB" in
 SYSTEMOPENMPI)
@@ -417,7 +421,7 @@ OPENMPI)
     # optional configuration tweaks:
     _foamSource `$WM_PROJECT_DIR/bin/foamEtcFile config/openmpi.sh`
 
-    export MPI_ARCH_PATH=$WM_THIRD_PARTY_DIR/platforms/$WM_ARCH$WM_COMPILER/$FOAM_MPI
+    : ${MPI_ARCH_PATH:=$WM_THIRD_PARTY_DIR/platforms/$WM_ARCH$WM_COMPILER/$FOAM_MPI}; export MPI_ARCH_PATH
 
     # Tell OpenMPI where to find its install directory
     export OPAL_PREFIX=$MPI_ARCH_PATH
@@ -563,6 +567,12 @@ INTELMPI)
     _foamAddPath    $MPI_ARCH_PATH/bin64
     _foamAddLib     $MPI_ARCH_PATH/lib64
     ;;
+
+MSMPI)
+    export FOAM_MPI=msmpi
+    : ${MPI_ARCH_PATH:=$HOME/projects/msmpi/install}; export MPI_ARCH_PATH
+    ;;
+
 *)
     export FOAM_MPI=dummy
     ;;
@@ -586,6 +596,26 @@ then
     MPI_BUFFER_SIZE=$minBufferSize
 fi
 export MPI_BUFFER_SIZE
+
+
+
+# GPU library
+# ~~~~~~~~~~~~~~~~~~~~~~
+
+
+case "$WM_GPU" in
+CUDA)
+    : ${CUDA_ARCH_PATH:=$HOME/projects/ofgpu}; export CUDA_ARCH_PATH
+    export FOAM_GPU_LIBBIN=$FOAM_LIBBIN/cuda
+    _foamAddLib     /usr/local/cuda/lib64
+    _foamAddLib     ${CUDA_ARCH_PATH}/install/lib
+    ;;
+*)
+    export FOAM_GPU_LIBBIN=$FOAM_LIBBIN/gpuless
+    ;;
+esac
+
+_foamAddLib $FOAM_GPU_LIBBIN
 
 
 # cleanup environment:

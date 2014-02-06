@@ -14,4 +14,7 @@ LIB_LIBS = \
     -lchemistryModel \
     -lfiniteVolume \
     -lODE\
-    -lreactionThermophysicalModels
+    -lreactionThermophysicalModels \
+    -lspecie \
+    -lfluidThermophysicalModels \
+    -lsolidThermo

@@ -74,8 +74,8 @@ Foam::temperatureCoupledBase::temperatureCoupledBase
 )
 :
     patch_(patch),
-    method_(KMethodTypeNames_.read(dict.lookup("kappa"))),
-    kappaName_(dict.lookup("kappaName"))
+    method_(KMethodType(KMethodTypeNames_.find(dict.lookupOrDefault<word>("kappa", "fluidThermo"))())),
+    kappaName_(dict.lookupOrDefault<word>("kappaName", "notset"))
 {}
 
 

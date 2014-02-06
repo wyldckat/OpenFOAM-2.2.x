@@ -6,5 +6,6 @@ EXE_INC = \
 
 LIB_LIBS = \
     -lfiniteVolume \
+    -lextrudeModel \
     -ltriSurface \
-    -lextrudeModel
+    -lmeshTools

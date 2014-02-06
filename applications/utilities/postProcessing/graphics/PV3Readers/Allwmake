@@ -16,7 +16,7 @@ then
     PV3blockMeshReader/Allwmake
     PV3FoamReader/Allwmake
 else
-    echo "ERROR: ParaView not found in $ParaView_DIR"
+    echo "WARNING: ParaView not found in $ParaView_DIR"
 fi
 
 # ----------------------------------------------------------------- end-of-file

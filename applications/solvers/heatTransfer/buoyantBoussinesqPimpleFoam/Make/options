@@ -16,6 +16,6 @@ EXE_LIBS = \
     -lsampling \
     -lmeshTools \
     -lincompressibleTurbulenceModel \
-    -lincompressibleRASModels \
+    -lincompressibleRASModels -u incompressibleRASModelsLoad \
     -lincompressibleTransportModels \
     -lradiationModels

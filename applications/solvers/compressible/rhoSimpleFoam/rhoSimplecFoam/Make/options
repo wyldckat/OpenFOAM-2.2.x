@@ -1,6 +1,7 @@
 EXE_INC = \
     -I.. \
     -I$(LIB_SRC)/thermophysicalModels/basic/lnInclude \
+    -I$(LIB_SRC)/thermophysicalModels/radiationModels/lnInclude \
     -I$(LIB_SRC)/turbulenceModels \
     -I$(LIB_SRC)/turbulenceModels/compressible/RAS/RASModel \
     -I$(LIB_SRC)/finiteVolume/cfdTools \
@@ -12,8 +13,10 @@ EXE_INC = \
 EXE_LIBS = \
     -lfluidThermophysicalModels \
     -lspecie \
-    -lcompressibleRASModels \
+    -lcompressibleTurbulenceModel \
+    -lcompressibleRASModels -u compressibleRASModelsLoad \
     -lfiniteVolume \
     -lsampling \
     -lmeshTools \
+    -lradiationModels \
     -lfvOptions

@@ -9,4 +9,8 @@ EXE_LIBS = \
     -lmeshTools \
     -llagrangian \
     -lfiniteVolume \
-    -lgenericPatchFields
+    -lincompressibleRASModels -u incompressibleRASModelsLoad \
+    -lcompressibleRASModels -u compressibleRASModelsLoad \
+    -lincompressibleLESModels -u compressibleLESModelsLoad \
+    -lcompressibleLESModels -u compressibleLESModelsLoad \
+    -lgenericPatchFields -u genericPatchFieldsLoad

@@ -16,12 +16,12 @@ EXE_INC = \
 EXE_LIBS = \
     -lphaseChangeTwoPhaseMixtures \
     -ltwoPhaseMixture \
-    -linterfaceProperties \
-    -ltwoPhaseProperties \
+    -linterfaceProperties -u interfacePropertiesLoad \
+    -ltwoPhaseProperties -u twoPhasePropertiesLoad \
     -lincompressibleTransportModels \
     -lincompressibleTurbulenceModel \
-    -lincompressibleRASModels \
-    -lincompressibleLESModels \
+    -lincompressibleRASModels -u incompressibleRASModelsLoad \
+    -lincompressibleLESModels -u incompressibleLESModelsLoad \
     -lfiniteVolume \
     -ldynamicMesh \
     -ldynamicFvMesh \

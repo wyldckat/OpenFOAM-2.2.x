@@ -39,6 +39,7 @@ Description
 #include "turbulenceModel.H"
 #include "bound.H"
 #include "pimpleControl.H"
+#include "radiationModel.H"
 #include "fvIOoptionList.H"
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
@@ -55,6 +56,7 @@ int main(int argc, char *argv[])
     #include "readControls.H"
     #include "createFields.H"
     #include "createFvOptions.H"
+    #include "createRadiationModel.H"
     #include "createPcorrTypes.H"
     #include "CourantNo.H"
     #include "setInitialDeltaT.H"

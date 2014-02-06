@@ -67,6 +67,9 @@ Usage
     be used with caution when the underlying (serial) geometry or the
     decomposition method etc. have been changed between decompositions.
 
+    \param -numberOfSubdomains n \n
+    Override dictionary entry decomposeParDict.numberOfSubdomains.
+
 \*---------------------------------------------------------------------------*/
 
 #include "OSspecific.H"
@@ -217,9 +220,10 @@ int main(int argc, char *argv[])
         }
 
         // get requested numberOfSubdomains
-        const label nDomains = readLabel
-        (
-            IOdictionary
+        label nDomains = 0;
+
+	{
+            IOdictionary decomposeParDict
             (
                 IOobject
                 (
@@ -231,8 +235,21 @@ int main(int argc, char *argv[])
                     IOobject::NO_WRITE,
                     false
                 )
-            ).lookup("numberOfSubdomains")
-        );
+	     );
+
+	    if (args.optionReadIfPresent("numberOfSubdomains", nDomains))
+	      {
+		// Rewrite dictionary for later use by decomposition, e.g., scotchDecomp
+		Info<< "Overriding decomposeParDict.numberOfSubdomains = " << nDomains << nl << endl;
+		decomposeParDict.set("numberOfSubdomains", nDomains);
+		decomposeParDict.regIOobject::write();
+	      }
+	    else 
+	      {
+		nDomains = readLabel(decomposeParDict.lookup("numberOfSubdomains"));
+	      }
+	}
+
 
         if (decomposeFieldsOnly)
         {

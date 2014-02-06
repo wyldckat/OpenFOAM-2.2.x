@@ -8,7 +8,7 @@ EXE_INC = \
 
 EXE_LIBS = \
     -lfiniteVolume \
-    -lgenericPatchFields \
+    -lgenericPatchFields -u genericPatchFieldsLoad \
     -lmeshTools \
     -lfileFormats \
     -lsampling \

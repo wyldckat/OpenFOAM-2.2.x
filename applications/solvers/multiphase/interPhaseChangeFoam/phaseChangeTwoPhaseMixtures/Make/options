@@ -6,6 +6,6 @@ EXE_INC = \
 
 LIB_LIBS = \
     -ltwoPhaseMixture \
-    -ltwoPhaseProperties \
+    -ltwoPhaseProperties -u twoPhasePropertiesLoad \
     -lincompressibleTransportModels \
     -lfiniteVolume

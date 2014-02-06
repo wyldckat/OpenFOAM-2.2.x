@@ -20,4 +20,6 @@ LIB_LIBS = \
     -lmeshTools \
     -lOpenFOAM \
     -lradiationModels \
+    -lspecie \
+    -lfluidThermophysicalModels \
     -ldynamicMesh

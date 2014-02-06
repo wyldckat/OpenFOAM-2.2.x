@@ -35,6 +35,7 @@ Description
 #include "psiThermo.H"
 #include "turbulenceModel.H"
 #include "OFstream.H"
+#include "radiationModel.H"
 #include "fvIOoptionList.H"
 #include "pimpleControl.H"
 
@@ -48,6 +49,7 @@ int main(int argc, char *argv[])
     #include "createEngineMesh.H"
     #include "createFields.H"
     #include "createFvOptions.H"
+    #include "createRadiationModel.H"
     #include "initContinuityErrs.H"
     #include "readEngineTimeControls.H"
     #include "compressibleCourantNo.H"

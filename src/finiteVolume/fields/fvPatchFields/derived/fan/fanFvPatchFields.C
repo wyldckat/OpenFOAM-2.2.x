@@ -48,13 +48,15 @@ void Foam::fanFvPatchField<Foam::scalar>::calcFanJump()
 {
     if (this->cyclicPatch().owner())
     {
-        const surfaceScalarField& phi =
+       const scalar dir = reversed_ ? -1 : 1; 
+
+       const surfaceScalarField& phi =
             db().lookupObject<surfaceScalarField>("phi");
 
         const fvsPatchField<scalar>& phip =
             patch().patchField<surfaceScalarField, scalar>(phi);
 
-        scalarField Un(max(phip/patch().magSf(), scalar(0)));
+        scalarField Un(max(dir*phip/patch().magSf(), scalar(0)));
 
         if (phi.dimensions() == dimDensity*dimVelocity*dimArea)
         {
@@ -62,6 +64,7 @@ void Foam::fanFvPatchField<Foam::scalar>::calcFanJump()
         }
 
         this->jump_ = max(this->jumpTable_->value(Un), scalar(0));
+	this->jump_ *= dir;
     }
 }
 

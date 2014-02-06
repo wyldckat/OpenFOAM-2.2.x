@@ -137,6 +137,7 @@ int yyFlexLexer::yywrap()
 one_space                  [ \t\f]
 space                      {one_space}*
 some_space                 {one_space}+
+comma                      ","
 cspace                     ","{space}
 
 alpha                      [_[:alpha:]]
@@ -149,7 +150,7 @@ lbrac                      "("
 rbrac                      ")"
 quote                      \"
 dash                       "-"
-dotColonDash               [.:-]
+dotColonPlusDash           [.:+-]
 
 schemeSpecialInitial       [!$%&*/\\:<=>?~_^#.@']
 schemeSpecialSubsequent    [.+-]
@@ -162,7 +163,7 @@ label                      [1-9]{decDigit}*
 hexLabel                   {hexDigit}+
 zeroLabel                  {digit}*
 signedInteger              [-+]?{integer}
-word                       ({alpha}|{digit}|{dotColonDash})*
+word                       ({alpha}|{digit}|{dotColonPlusDash})*
 wordBraces                 ({word}|{lbrac}|{rbrac})*
 
 exponent_part              [eE][-+]?{digit}+
@@ -740,6 +741,10 @@ endOfSection               {space}")"{space}
 <*>{some_space}|\r {
     }
 
+ /* ------              Ignore commas.                               ------  */
+
+<*>{comma} {
+    }
 
  /* ------              Any other characters are errors.              ------ */
 

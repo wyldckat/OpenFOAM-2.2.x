@@ -12,9 +12,10 @@ EXE_LIBS = \
     -lfluidThermophysicalModels \
     -lspecie \
     -ltwoPhaseMixture \
-    -ltwoPhaseProperties \
-    -linterfaceProperties \
     -lcompressibleTurbulenceModel \
-    -lcompressibleRASModels \
-    -lcompressibleLESModels \
+    -lcompressibleRASModels -u compressibleRASModelsLoad \
+    -lcompressibleLESModels -u compressibleLESModelsLoad \
+    -ltwoPhaseProperties -u twoPhasePropertiesLoad \
+    -linterfaceProperties -u interfacePropertiesLoad \
+    -lincompressibleTransportModels \
     -lfiniteVolume

@@ -6,7 +6,8 @@ EXE_INC = \
     -I$(LIB_SRC)/turbulenceModels \
     -I$(LIB_SRC)/turbulenceModels/incompressible/RAS/lnInclude \
     -I$(LIB_SRC)/transportModels \
-    -I$(LIB_SRC)/transportModels/incompressible/singlePhaseTransportModel
+    -I$(LIB_SRC)/transportModels/incompressible/singlePhaseTransportModel \
+    -I$(LIB_SRC)/thermophysicalModels/radiationModels/lnInclude
 
 EXE_LIBS = \
     -lfiniteVolume \
@@ -14,5 +15,6 @@ EXE_LIBS = \
     -lmeshTools \
     -lfvOptions \
     -lincompressibleTurbulenceModel \
-    -lincompressibleRASModels \
-    -lincompressibleTransportModels
+    -lincompressibleRASModels -u incompressibleRASModelsLoad \
+    -lincompressibleTransportModels \
+    -lradiationModels

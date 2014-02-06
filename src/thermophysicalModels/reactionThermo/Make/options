@@ -9,6 +9,6 @@ EXE_INC = \
 LIB_LIBS = \
     -lfiniteVolume \
     -lfluidThermophysicalModels \
-    -lspecie \
     -lsolidSpecie \
-    -lmeshTools
+    -lmeshTools \
+    -lspecie

@@ -11,9 +11,10 @@ EXE_INC = \
 
 
 EXE_LIBS = \
-    -lincompressibleRASModels \
+    -lincompressibleRASModels -u incompressibleRASModelsLoad \
     -lincompressibleTransportModels \
     -lfiniteVolume \
     -lmeshTools \
     -lfvOptions \
-    -lsampling
+    -lsampling \
+    -lincompressibleTurbulenceModel

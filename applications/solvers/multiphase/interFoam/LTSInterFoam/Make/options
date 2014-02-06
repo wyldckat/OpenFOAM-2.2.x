@@ -11,13 +11,13 @@ EXE_INC = \
     -I$(LIB_SRC)/sampling/lnInclude
 
 EXE_LIBS = \
-    -linterfaceProperties \
     -ltwoPhaseMixture \
-    -ltwoPhaseProperties \
+    -linterfaceProperties -u interfacePropertiesLoad \
+    -ltwoPhaseProperties -u twoPhasePropertiesLoad \
     -lincompressibleTransportModels \
     -lincompressibleTurbulenceModel \
-    -lincompressibleRASModels \
-    -lincompressibleLESModels \
+    -lincompressibleRASModels -u incompressibleRASModelsLoad \
+    -lincompressibleLESModels -u incompressibleLESModelsLoad \
     -lfiniteVolume \
     -lmeshTools \
     -lfvOptions \

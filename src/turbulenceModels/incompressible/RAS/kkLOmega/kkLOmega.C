@@ -650,10 +650,30 @@ void kkLOmega::correct()
 
     const volScalarField lambdaEff(min(Clambda_*y_, lambdaT));
 
+    /*
+      18th International Conference
+      ENGINEERING MECHANICS 2012 pp. 309–315
+      Svratka, Czech Republic, May 14 – 17, 2012 Paper #195
+      NUMERICAL SIMULATION OF TRANSITIONAL FLOWS WITH LAMINAR KINETIC ENERGY
+      J. Furst
+      http://www.engmech.cz/2012/proceedings/pdf/195_Furst_J-FT.pdf
+
+      "Note that the article Walters and Cokljat (2008) does not include the exponent
+      2/3 in the deﬁnition of fW. The original model Walters and Leylek (2004) as well as the Walters and
+      Leylek (2005) do include the exponent."
+      fw = pow(lambdaEff/(lambdaT + dimensionedScalar("SMALL", dimLength, ROOTVSMALL)), 2.0/3.0)
+
+      "The coefﬁcient Cω2 = 0.92 is constant in the original article. Nevertheless the correct form is"
+      Cw2 = Cw2_(0.92) * sqr(fw)
+    */
+
     const volScalarField fw
     (
-        lambdaEff/(lambdaT + dimensionedScalar("SMALL", dimLength, ROOTVSMALL))
+     //  lambdaEff/(lambdaT + dimensionedScalar("SMALL", dimLength, ROOTVSMALL))
+     pow(lambdaEff/(lambdaT + dimensionedScalar("SMALL", dimLength, ROOTVSMALL)), 2.0/3.0)
     );
+
+    const volScalarField Cw2(Cw2_*sqr(fw));
 
     const volTensorField gradU(fvc::grad(U_));
 
@@ -772,7 +792,7 @@ void kkLOmega::correct()
             (CwR_/(fw + fwMin) - 1.0)*kl_*(Rbp + Rnat)/(kt_ + kMin_)
           , omega_
         )
-      - fvm::Sp(Cw2_*omega_, omega_)
+      - fvm::Sp(Cw2*omega_, omega_)
       + Cw3_*fOmega(lambdaEff, lambdaT)*alphaTEff*sqr(fw)*sqrt(kt_)/pow3(y_)
     );
 

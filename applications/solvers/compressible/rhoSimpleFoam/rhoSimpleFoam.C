@@ -33,6 +33,7 @@ Description
 #include "fvCFD.H"
 #include "psiThermo.H"
 #include "RASModel.H"
+#include "radiationModel.H"
 #include "simpleControl.H"
 #include "fvIOoptionList.H"
 
@@ -48,6 +49,7 @@ int main(int argc, char *argv[])
 
     #include "createFields.H"
     #include "createFvOptions.H"
+    #include "createRadiationModel.H"
     #include "initContinuityErrs.H"
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //

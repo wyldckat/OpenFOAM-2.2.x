@@ -119,7 +119,6 @@ public:
     //- Runtime type information
     TypeName("RASModel");
 
-
     // Declare run-time constructor selection table
 
         declareRunTimeSelectionTable
@@ -135,7 +134,6 @@ public:
             ),
             (U, phi, transport, turbulenceModelName)
         );
-
 
     // Constructors
 

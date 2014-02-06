@@ -73,6 +73,19 @@ Usage
 
 using namespace Foam;
 
+namespace Foam
+{
+class polyDualMeshApp
+{
+public: 
+  //- Runtime type information
+  ClassName("polyDualMeshApp");
+}; // class polyDualMeshApp
+
+defineTypeNameAndDebug(polyDualMeshApp, 0);
+}
+
+
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
 // Naive feature detection. All boundary edges with angle > featureAngle become
@@ -374,6 +387,11 @@ int main(int argc, char *argv[])
         "disable the default behaviour of preserving faceZones by having"
         " multiple faces inbetween cells"
     );
+    argList::addBoolOption
+    (
+        "writeMaps",
+        "write cellMap, faceMap in polyMesh/"
+    );
 
 #   include "setRootCase.H"
 #   include "createTime.H"
@@ -423,6 +441,7 @@ int main(int argc, char *argv[])
             << nl << endl;
     }
 
+    const bool writeMaps = args.optionFound("writeMaps");
 
     // Face(centre)s that need inclusion in the dual mesh
     labelList featureFaces;
@@ -459,6 +478,8 @@ int main(int argc, char *argv[])
     }
 
     // Write obj files for debugging
+    if (polyDualMeshApp::debug) 
+      {
     dumpFeatures
     (
         mesh,
@@ -467,7 +488,7 @@ int main(int argc, char *argv[])
         singleCellFeaturePoints,
         multiCellFeaturePoints
     );
-
+      }
 
 
     // Read objects in time directory
@@ -523,6 +544,13 @@ int main(int argc, char *argv[])
         multiCellFeaturePoints,
         meshMod
     );
+
+    if (writeMaps)
+      {
+        Info<< "Writing cell and face maps (old to new) to polyMesh." << nl
+            << endl;
+        dualMaker.writeMaps();
+      }
 
     // Create mesh, return map from old to new mesh.
     autoPtr<mapPolyMesh> map = meshMod.changeMesh(mesh, false);

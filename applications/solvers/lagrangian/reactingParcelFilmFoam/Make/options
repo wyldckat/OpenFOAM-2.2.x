@@ -30,8 +30,8 @@ EXE_LIBS = \
     -lfvOptions \
     -lsampling \
     -lmeshTools \
-    -lcompressibleRASModels \
-    -lcompressibleLESModels \
+    -lcompressibleRASModels -u compressibleRASModelsLoad \
+    -lcompressibleLESModels -u compressibleLESModelsLoad \
     -lspecie \
     -lfluidThermophysicalModels \
     -lsolidProperties \
@@ -43,6 +43,9 @@ EXE_LIBS = \
     -lregionModels \
     -lradiationModels \
     -lsurfaceFilmModels \
-    -llagrangianIntermediate \
+    -llagrangianIntermediate -u lagrangianIntermediateLoad \
     -lODE \
-    -lcombustionModels
+    -lcombustionModels \
+    -lsampling \
+    -lcompressibleTurbulenceModel \
+    -llagrangian

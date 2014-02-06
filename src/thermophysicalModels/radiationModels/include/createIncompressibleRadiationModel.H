@@ -26,7 +26,8 @@
         );
 
         dimensionedScalar rhoRef(transportProperties.lookup("rhoRef"));
-        dimensionedScalar CpRef(transportProperties.lookup("CpRef"));
+	// RJS 10/9/13 Prefer Cp over original CpRef for compatiblity with Cp in thermophysicalProperties
+        dimensionedScalar CpRef(transportProperties.lookup("Cp"));
 
         rhoCpRef = rhoRef*CpRef;
     }

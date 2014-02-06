@@ -34,5 +34,7 @@ LIB_LIBS = \
     -lSLGThermo \
     -lfiniteVolume \
     -lmeshTools \
-    -lcompressibleRASModels \
-    -lcompressibleLESModels
+    -lspecie \
+    -lcompressibleTurbulenceModel \
+    -lcompressibleRASModels -u compressibleRASModelsLoad \
+    -lcompressibleLESModels -u compressibleLESModelsLoad

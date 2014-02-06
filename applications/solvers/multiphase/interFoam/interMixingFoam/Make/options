@@ -14,11 +14,11 @@ EXE_INC = \
 
 EXE_LIBS = \
     -ltwoPhaseMixture \
-    -ltwoPhaseProperties \
+    -ltwoPhaseProperties -u twoPhasePropertiesLoad \
     -lincompressibleTransportModels \
     -lincompressibleTurbulenceModel \
-    -lincompressibleRASModels \
-    -lincompressibleLESModels \
+    -lincompressibleRASModels -u incompressibleRASModelsLoad \
+    -lincompressibleLESModels -u incompressibleLESModelsLoad \
     -lfiniteVolume \
     -lmeshTools \
     -lfvOptions \

@@ -23,11 +23,13 @@ License
 
 \*---------------------------------------------------------------------------*/
 
+#include "incompressible/transportModel/transportModel.H"
 #include "turbulentHeatFluxTemperatureFvPatchScalarField.H"
 #include "addToRunTimeSelectionTable.H"
 #include "fvPatchFieldMapper.H"
 #include "volFields.H"
 #include "incompressible/turbulenceModel/turbulenceModel.H"
+#include "RASModel.H"
 
 // * * * * * * * * * * * * * * Static Data Members * * * * * * * * * * * * * //
 
@@ -109,7 +111,7 @@ turbulentHeatFluxTemperatureFvPatchScalarField
     fixedGradientFvPatchScalarField(p, iF),
     heatSource_(heatSourceTypeNames_.read(dict.lookup("heatSource"))),
     q_("q", dict, p.size()),
-    alphaEffName_(dict.lookup("alphaEff"))
+    alphaEffName_(dict.lookupOrDefault<word>("alphaEff", "alphat"))
 {
     fvPatchField<scalar>::operator=(patchInternalField());
     gradient() = 0.0;
@@ -184,21 +186,27 @@ void turbulentHeatFluxTemperatureFvPatchScalarField::updateCoeffs()
         patch().lookupPatchField<volScalarField, scalar>(alphaEffName_);
 
     // retrieve (constant) specific heat capacity from transport dictionary
-    const turbulenceModel& turbulence =
-        db().lookupObject<turbulenceModel>("turbulenceModel");
-    const scalar Cp0(readScalar(turbulence.transport().lookup("Cp0")));
+    const RASModel& rasModel = db().lookupObject<RASModel>("RASProperties");
+    // Assume alphaEffp = alphat, renamed at 2.2.x from kappat,
+    // need kappaEff = kappa(laminar) + kappat, where kappal = nu/Pr
+    // See applications/solvers/heatTransfer/buoyantBoussinesqSimpleFoam/TEqn.H
+    const label patchI = patch().index();
+    const scalarField& nu = rasModel.nu()->boundaryField()[patchI];
+    const scalar
+      Pr(dimensionedScalar(rasModel.transport().lookup("Pr")).value());
+    const scalar Cp0(dimensionedScalar(rasModel.transport().lookup("Cp")).value());
 
     switch (heatSource_)
     {
         case hsPower:
         {
             const scalar Ap = gSum(patch().magSf());
-            gradient() = q_/(Ap*Cp0*alphaEffp);
+            gradient() = q_/(Ap*Cp0*(nu/Pr + alphaEffp));
             break;
         }
         case hsFlux:
         {
-            gradient() = q_/(Cp0*alphaEffp);
+	    gradient() = q_/(Cp0*(nu/Pr + alphaEffp));
             break;
         }
         default:

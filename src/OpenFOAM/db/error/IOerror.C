@@ -247,7 +247,13 @@ void Foam::IOerror::abort()
             Perr<< endl << *this << endl
                 << "\nFOAM aborting\n" << endl;
             printStack(Perr);
+
+	    // Prefer ::exit(1) to avoid unnecessary warnings on Windows
+#ifdef MSWIN
+	    ::exit(1);
+#else
             ::abort();
+#endif
         }
     }
 }

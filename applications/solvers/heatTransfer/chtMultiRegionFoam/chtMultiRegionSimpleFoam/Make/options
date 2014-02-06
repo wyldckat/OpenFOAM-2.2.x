@@ -22,8 +22,8 @@ EXE_LIBS = \
     -lsolidThermo \
     -lspecie \
     -lcompressibleTurbulenceModel \
-    -lcompressibleRASModels \
-    -lcompressibleLESModels \
+    -lcompressibleRASModels -u compressibleRASModelsLoad \
+    -lcompressibleLESModels -u compressibleLESModelsLoad \
     -lradiationModels \
     -lfvOptions \
     -lregionModels \

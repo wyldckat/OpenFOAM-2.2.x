@@ -9,4 +9,4 @@ LIB_LIBS = \
     -L$(BOOST_ARCH_PATH)/lib -lboost_thread \
     -lmeshTools \
     -ldecompositionMethods \
-    -lrenumberMethods
+    -lrenumberMethods -u renumberMethodsLoad

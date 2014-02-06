@@ -98,6 +98,10 @@ class fanFvPatchField
 :
     public uniformJumpFvPatchField<Type>
 {
+    // Private data
+
+        //- Reverse direction relative to patch normal
+        Switch reversed_;
 
     // Private Member Functions
 
@@ -176,6 +180,10 @@ public:
 
         //- Update the coefficients associated with the patch field
         virtual void updateCoeffs();
+
+
+        //- Write
+        virtual void write(Ostream&) const;
 };
 
 

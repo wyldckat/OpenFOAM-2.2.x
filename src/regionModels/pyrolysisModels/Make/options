@@ -24,9 +24,9 @@ LIB_LIBS = \
     -lsolidChemistryModel \
     -lsolidThermo \
     -lcompressibleTurbulenceModel \
-    -lcompressibleRASModels \
-    -lcompressibleLESModels \
+    -lcompressibleRASModels -u compressibleRASModelsLoad \
+    -lcompressibleLESModels -u compressibleLESModelsLoad \
     -lLESdeltas \
-    -lregionModels \
     -lradiationModels \
-    -lreactionThermophysicalModels
+    -lreactionThermophysicalModels \
+    -lregionModels

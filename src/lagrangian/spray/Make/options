@@ -38,6 +38,9 @@ LIB_LIBS = \
     -lcompressibleTurbulenceModel \
     -lcompressibleRASModels \
     -lcompressibleLESModels \
+    -lincompressibleTurbulenceModel \
+    -lincompressibleRASModels \
+    -lincompressibleLESModels \
     -lLESdeltas \
     -lincompressibleTransportModels \
     -lregionModels \

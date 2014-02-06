@@ -31,6 +31,12 @@ InClass
 
 // * * * * * * * * * * * * * * Static Data Members * * * * * * * * * * * * * //
 
+// Symbol to force loading at runtime
+extern "C"
+void renumberMethodsLoad()
+{}
+
+
 namespace Foam
 {
     defineTypeNameAndDebug(renumberMethod, 0);

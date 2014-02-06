@@ -46,7 +46,8 @@ Foam::fanFvPatchField<Type>::fanFvPatchField
     const DimensionedField<Type, volMesh>& iF
 )
 :
-    uniformJumpFvPatchField<Type>(p, iF)
+    uniformJumpFvPatchField<Type>(p, iF),
+    reversed_(false)
 {}
 
 
@@ -59,7 +60,8 @@ Foam::fanFvPatchField<Type>::fanFvPatchField
     const fvPatchFieldMapper& mapper
 )
 :
-    uniformJumpFvPatchField<Type>(ptf, p, iF, mapper)
+    uniformJumpFvPatchField<Type>(ptf, p, iF, mapper),
+    reversed_(ptf.reversed_)
 {}
 
 
@@ -71,8 +73,11 @@ Foam::fanFvPatchField<Type>::fanFvPatchField
     const dictionary& dict
 )
 :
-    uniformJumpFvPatchField<Type>(p, iF, dict)
-{}
+    uniformJumpFvPatchField<Type>(p, iF, dict),
+    reversed_(false)
+{    
+    reversed_.readIfPresent("reversed", dict);
+}
 
 
 template<class Type>
@@ -81,7 +86,8 @@ Foam::fanFvPatchField<Type>::fanFvPatchField
     const fanFvPatchField<Type>& ptf
 )
 :
-    uniformJumpFvPatchField<Type>(ptf)
+    uniformJumpFvPatchField<Type>(ptf),
+    reversed_(ptf.reversed_)
 {}
 
 
@@ -92,7 +98,8 @@ Foam::fanFvPatchField<Type>::fanFvPatchField
     const DimensionedField<Type, volMesh>& iF
 )
 :
-    uniformJumpFvPatchField<Type>(ptf, iF)
+    uniformJumpFvPatchField<Type>(ptf, iF),
+    reversed_(ptf.reversed_)
 {}
 
 
@@ -110,6 +117,15 @@ void Foam::fanFvPatchField<Type>::updateCoeffs()
 
     // call fixedJump variant - uniformJump will overwrite the jump value
     fixedJumpFvPatchField<scalar>::updateCoeffs();
+}
+
+
+template<class Type>
+void Foam::fanFvPatchField<Type>::write(Ostream& os) const
+{
+    uniformJumpFvPatchField<Type>::write(os);
+
+    os.writeKeyword("reversed") << reversed_ << token::END_STATEMENT << nl;
 }
 
 

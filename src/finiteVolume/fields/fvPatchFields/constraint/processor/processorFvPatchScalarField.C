@@ -33,6 +33,7 @@ namespace Foam
 // * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * //
 
 template<>
+inline
 void processorFvPatchField<scalar>::initInterfaceMatrixUpdate
 (
     scalarField&,
@@ -89,6 +90,7 @@ void processorFvPatchField<scalar>::initInterfaceMatrixUpdate
 
 
 template<>
+inline
 void processorFvPatchField<scalar>::updateInterfaceMatrix
 (
     scalarField& result,

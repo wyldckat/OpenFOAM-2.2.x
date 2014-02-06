@@ -20,8 +20,10 @@ LIB_LIBS = \
     -llagrangian \
     -ldsmc \
     -lincompressibleTransportModels \
-    -lcompressibleRASModels \
-    -lincompressibleRASModels \
-    -lcompressibleLESModels \
-    -lincompressibleLESModels \
+    -lcompressibleTurbulenceModel \
+    -lincompressibleTurbulenceModel \
+    -lcompressibleRASModels -u compressibleRASModelsLoad \
+    -lincompressibleRASModels -u incompressibleRASModelsLoad \
+    -lcompressibleLESModels -u compressibleLESModelsLoad \
+    -lincompressibleLESModels -u incompressibleLESModelsLoad \
     -lfluidThermophysicalModels

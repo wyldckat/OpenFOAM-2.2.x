@@ -31,6 +31,7 @@ License
 #include "edgeFaceCirculator.H"
 #include "mergePoints.H"
 #include "OFstream.H"
+#include "labelListIOList.H"
 
 // * * * * * * * * * * * * * * Static Data Members * * * * * * * * * * * * * //
 
@@ -359,6 +360,11 @@ Foam::label Foam::meshDualiser::addBoundaryFace
         zoneID,         // zoneID
         zoneFlip        // zoneFlip
     );
+
+    forAll(verts, ptI)
+      {
+	dualPointToDualBoundaryFaces_(verts[ptI]).append(dualFaceI);
+      }
 
     //pointField dualPoints(meshMod.points());
     //vector n(newFace.normal(dualPoints));
@@ -1459,6 +1465,87 @@ void Foam::meshDualiser::setRefinement
     {
         dumpPolyTopoChange(meshMod, "generatedFacesFromBndFaces_");
     }
+}
+
+
+void Foam::meshDualiser::writeMap(const string & name, labelListList & cellMap)
+{
+  labelListCompactIOList ioList
+    (
+     IOobject
+     (
+      name,
+      mesh_.facesInstance(),
+      polyMesh::meshSubDir,
+      mesh_,
+      IOobject::NO_READ,
+      IOobject::NO_WRITE,
+      false
+      ),
+     cellMap
+     );
+  ioList.write();
+}
+
+
+void Foam::meshDualiser::createCellMap(labelListList & cellMap)
+{
+  label pCell;
+  const labelListList & pointCells = mesh_.pointCells();
+
+  forAll(pointCells, ptI)
+    {
+      const labelList & pCells = pointCells[ptI];
+      
+      forAll(pCells, pCellI) 
+	{
+	  pCell = pCells[pCellI];
+	  cellMap[pCell].append(findDualCell(pCell, ptI));
+	}
+    }
+}
+
+
+void Foam::meshDualiser::writeCellMap()
+{
+  labelListList cellMap(mesh_.nCells());
+  createCellMap(cellMap);
+  writeMap("cellDualMap", cellMap);
+}
+
+
+
+void Foam::meshDualiser::createFaceMap(labelListList & faceMap)
+{
+  label face, start;
+  const polyBoundaryMesh & patches = mesh_.boundaryMesh();
+
+  forAll(patches, patchI)
+    {
+      const polyPatch & pp = patches[patchI];
+      start = pp.start();
+
+      forAll(pp, faceI)
+	{
+	  face = start + faceI;
+	  faceMap[face] = dualPointToDualBoundaryFaces_[faceToDualPoint_[face]];
+	}
+    }
+}
+
+
+void Foam::meshDualiser::writeFaceMap()
+{
+  labelListList faceMap(mesh_.nFaces());
+  createFaceMap(faceMap);
+  writeMap("faceDualMap", faceMap);
+}
+
+
+void Foam::meshDualiser::writeMaps()
+{
+  writeCellMap();
+  writeFaceMap();
 }
 
 

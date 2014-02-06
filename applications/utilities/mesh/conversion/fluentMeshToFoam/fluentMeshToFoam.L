@@ -114,6 +114,7 @@ int yyFlexLexer::yywrap()
 one_space                  [ \t\f]
 space                      {one_space}*
 some_space                 {one_space}+
+comma                      ","
 cspace                     ","{space}
 spaceNl                    ({space}|\n|\r)*
 
@@ -127,7 +128,7 @@ lbrac                      "("
 rbrac                      ")"
 quote                      \"
 dash                       "-"
-dotColonDash               [.:-]
+dotColonPlusDash           [.:+-]
 
 schemeSpecialInitial       [!$%&*/:<=>?~_^#.]
 schemeSpecialSubsequent    [.+-]
@@ -140,7 +141,7 @@ label                      [1-9]{decDigit}*
 hexLabel                   {hexDigit}+
 zeroLabel                  {digit}*
 
-word                       ({alpha}|{digit}|{dotColonDash})*
+word                       ({alpha}|{digit}|{dotColonPlusDash})*
 
 exponent_part              [eE][-+]?{digit}+
 fractional_constant        [-+]?(({digit}*"."{digit}+)|({digit}+".")|({digit}))
@@ -816,6 +817,10 @@ endOfSection               {space}")"{space}
 <unknownBlock,embeddedUnknownBlock>{spaceNl}{text} {
     }
 
+ /* ------              Ignore commas.                               ------  */
+
+<*>{comma} {
+    }
 
  /* ------ Ignore remaining space and \n s.  Any other characters are errors. */
 
